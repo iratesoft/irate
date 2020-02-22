@@ -42,17 +42,12 @@ switch ($command) {
 
     // If we are not on windows, ask to chmod.
     if (strpos(php_uname(), 'Windows') === false) {
-      $unwritable = 0;
-      foreach ($writableDirectories as $dir) if (!is_writable($dir)) $unwritable++;
+      $chmod = Prompt::yesOrNo('To run Irate Framework, you must chmod several directories. Can we attempt this?', 'Y');
 
-      if ($unwritable >= 1) {
-        $chmod = Prompt::yesOrNo('To run Irate Framework, you must chmod your directory. Can we attempt this?', 'Y');
-
-        if ($chmod) {
-          foreach ($writableDirectories as $dir) {
-            shell_exec('sudo chmod -R 777 ' . $dir);
-            ConsoleLogger::log("$dir now writable.");
-          }
+      if ($chmod) {
+        foreach ($writableDirectories as $dir) {
+          shell_exec('sudo chmod -R 777 ' . $dir);
+          ConsoleLogger::log("$dir now writable.");
         }
       }
     }
