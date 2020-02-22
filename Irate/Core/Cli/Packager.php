@@ -177,7 +177,7 @@ class Packager {
   }
 
   private function setPackagesDirectory() {
-    $this->packagesDirectory = ROOT_PATH . '/Irate/Resources/Packages';
+    $this->packagesDirectory = IRATE_PATH . '/Resources/Packages';
   }
 
   private function setApplicationDirectory() {
