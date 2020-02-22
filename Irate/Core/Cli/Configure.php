@@ -9,7 +9,7 @@ use Irate\System;
 class Configure {
 
   // Path to the configuration files for Irate
-  public $CONFIG_FILES_PATH = '/Irate/Resources/ConfigFiles/';
+  public $CONFIG_FILES_PATH;
 
   // Variables that need to be set for setup
   public $SETUP_DB = false;
@@ -26,6 +26,7 @@ class Configure {
   private $system;
 
   public function __construct($vars = []) {
+    $this->CONFIG_FILES_PATH = IRATE_PATH . '/Resources/ConfigFiles/';
 
     // Set each variable passed
     foreach ($vars as $key => $var) {
@@ -52,7 +53,7 @@ class Configure {
    */
   public function writeConfig() {
     // Get the default config
-    $contents = file_get_contents(ROOT_PATH . $this->CONFIG_FILES_PATH . 'DefaultConfig.php.copy');
+    $contents = file_get_contents($this->CONFIG_FILES_PATH . 'DefaultConfig.php.copy');
 
     // Database
     if ($this->SETUP_DB) {

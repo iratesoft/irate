@@ -1,6 +1,7 @@
 <?php
 
 defined('ROOT_PATH') or define('ROOT_PATH', __DIR__);
+defined('IRATE_PATH') or define('IRATE_PATH', __DIR__ . '/..');
 
 require ROOT_PATH . '/vendor/autoload.php';
 use Irate\Core\Cli\ConsoleLogger;
@@ -20,9 +21,9 @@ if (!$command) {
 }
 
 $writableDirectories = [
-  './Application',
-  './Logs',
-  './public/assets'
+  ROOT_PATH . '/Application',
+  ROOT_PATH . '/Logs',
+  ROOT_PATH . '/public/assets'
 ];
 
 // Different command cases.
