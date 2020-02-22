@@ -32,9 +32,9 @@ class View
     self::$Smarty = new Smarty;
 
     // Smarty configurations
-    self::$Smarty->template_dir  = IRATE_PATH . '/../Application/Views';
-    self::$Smarty->cache_dir     = IRATE_PATH . '/../Application/Cache';
-    self::$Smarty->compile_dir   = IRATE_PATH . '/../Application/ViewsCompiled';
+    self::$Smarty->template_dir  = ROOT_PATH . '/Application/Views';
+    self::$Smarty->cache_dir     = ROOT_PATH . '/Application/Cache';
+    self::$Smarty->compile_dir   = ROOT_PATH . '/Application/ViewsCompiled';
     self::$Smarty->force_compile = false;
   }
 
