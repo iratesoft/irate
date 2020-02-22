@@ -13,12 +13,12 @@ class Configure {
 
   // Variables that need to be set for setup
   public $SETUP_DB = false;
-  public $DB_HOST = '';
+  public $DB_HOST = 'false';
   public $DB_NAME = '';
   public $DB_USER = '';
   public $DB_PASS = '';
   public $SHOW_ERRORS = 'false';
-  public $BASE_URL = false;
+  public $BASE_URL = '';
   public $ENCODING_KEY = false;
 
   // Private classes
@@ -56,20 +56,16 @@ class Configure {
     $contents = file_get_contents($this->CONFIG_FILES_PATH . 'DefaultConfig.php.copy');
 
     // Database
-    if ($this->SETUP_DB) {
-      $contents = str_replace('{DB_HOST}', $this->DB_HOST, $contents);
-      $contents = str_replace('{DB_NAME}', $this->DB_NAME, $contents);
-      $contents = str_replace('{DB_USER}', $this->DB_USER, $contents);
-      $contents = str_replace('{DB_PASS}', $this->DB_PASS, $contents);
-    }
+    $contents = str_replace('{DB_HOST}', $this->DB_HOST, $contents);
+    $contents = str_replace('{DB_NAME}', $this->DB_NAME, $contents);
+    $contents = str_replace('{DB_USER}', $this->DB_USER, $contents);
+    $contents = str_replace('{DB_PASS}', $this->DB_PASS, $contents);
 
     // Errors
     $SHOW_ERRORS = ($this->SHOW_ERRORS ? 'true' : 'false');
     $contents = str_replace('{SHOW_ERRORS}', $SHOW_ERRORS, $contents);
 
-    if ($this->BASE_URL) {
-      $contents = str_replace("{BASE_URL}", $this->BASE_URL, $contents);
-    }
+    $contents = str_replace("{BASE_URL}", (!empty($this->BASE_URL) ? $this->BASE_URL : '/'), $contents);
 
     if (!$this->ENCODING_KEY) {
       $contents = str_replace('{ENCODING_KEY}', md5(time()), $contents);
