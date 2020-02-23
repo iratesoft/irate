@@ -12,11 +12,18 @@ use Irate\Core\Connection;
 use Irate\Core\AssetBundle;
 use Irate\Core\Security;
 use Irate\Core\Session;
+use Irate\Core\Email;
 
 // Define globals if not already.
-defined('IRATE_PATH')  or define('IRATE_PATH',  __DIR__);
-defined('IRATE_ENV')   or define('IRATE_ENV',   'dev');
-defined('IRATE_DEBUG') or define('IRATE_DEBUG', false);
+defined('IRATE_PATH')     or define('IRATE_PATH',  __DIR__);
+defined('IRATE_ENV')      or define('IRATE_ENV',   'dev');
+defined('IRATE_DEBUG')    or define('IRATE_DEBUG', false);
+defined('PHPMAILER_PATH') or define('PHPMAILER_PATH', IRATE_PATH . "/../vendor/phpmailer/phpmailer/src/");
+
+// Require PHPMailer
+require PHPMAILER_PATH . "PHPMailer.php";
+require PHPMAILER_PATH . "SMTP.php";
+require PHPMAILER_PATH . "Exception.php";
 
 // Set error & exception handlers
 set_error_handler('Irate\Core\Error::errorHandler');
@@ -41,6 +48,7 @@ class System {
   public static $AssetBundle = false;
   public static $security;
   public static $session;
+  public static $email;
 
   public function __construct() {
     // Set config and params
@@ -71,6 +79,7 @@ class System {
     self::$db          = new Connection();
     self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl()]);
     self::$response    = new Response();
+    self::$email       = new Email(['config' => $this->config, 'view' => self::$view]);
 
     // Certain classes can not instantiate on CLI
     if (!self::isCLI()) {

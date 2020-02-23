@@ -45,7 +45,35 @@ class Config
 
     ];
 
+    /**
+     * Unique Key for encoding/decoding strings in Security class.
+     * @var string
+     */
     const ENCODING_KEY = '{ENCODING_KEY}';
+
+    /**
+     * SMTP HOST
+     * @var string
+     */
+    const SMTP_HOST = '';
+
+    /**
+     * SMTP USERNAME
+     * @var string
+     */
+    const SMTP_USERNAME = '';
+
+    /**
+     * SMTP PASSWORD
+     * @var string
+     */
+    const SMTP_PASSWORD = '';
+
+    /**
+     * SMTP PORT
+     * @var integer
+     */
+    const SMTP_PORT = 587;
 
     /**
      * Parameters that you may use throughout your application
