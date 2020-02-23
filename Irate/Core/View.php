@@ -68,6 +68,6 @@ class View
     }
 
     // Display the template file.
-    self::$Smarty->fetch("emails/$template.tpl");
+    return self::$Smarty->fetch("emails/$template.tpl");
   }
 }
