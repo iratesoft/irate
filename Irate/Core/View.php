@@ -60,4 +60,14 @@ class View
     // Display the template file.
     self::$Smarty->display("$template.tpl");
   }
+
+  public static function renderEmail($template, $args = []) {
+    // Add each argument passed to the smarty variables.
+    foreach ($args as $key => $value) {
+      self::$Smarty->assign($key, $value);
+    }
+
+    // Display the template file.
+    self::$Smarty->fetch("emails/$template.tpl");
+  }
 }

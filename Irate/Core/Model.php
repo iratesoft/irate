@@ -14,11 +14,13 @@ abstract class Model
   protected $request;
   protected $security;
   protected $db;
+  protected $email;
 
   public function __construct() {
     $this->db = System::$db;
     $this->request = System::$request;
     $this->security = System::$security;
+    $this->email = System::$email;
   }
 
   public function list ($table, $filters = []) {
