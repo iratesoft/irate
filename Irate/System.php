@@ -18,12 +18,6 @@ use Irate\Core\Email;
 defined('IRATE_PATH')     or define('IRATE_PATH',  __DIR__);
 defined('IRATE_ENV')      or define('IRATE_ENV',   'dev');
 defined('IRATE_DEBUG')    or define('IRATE_DEBUG', false);
-defined('PHPMAILER_PATH') or define('PHPMAILER_PATH', IRATE_PATH . "/../vendor/phpmailer/phpmailer/src/");
-
-// Require PHPMailer
-require PHPMAILER_PATH . "PHPMailer.php";
-require PHPMAILER_PATH . "SMTP.php";
-require PHPMAILER_PATH . "Exception.php";
 
 // Set error & exception handlers
 set_error_handler('Irate\Core\Error::errorHandler');
