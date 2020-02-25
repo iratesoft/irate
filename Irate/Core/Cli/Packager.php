@@ -7,34 +7,55 @@ use Irate\Core\Cli\Migrations;
 
 class Packager {
 
+  // Class referencers
   private $system;
   private $migrations;
+
+  // Package directory
   private $packagesDirectory = false;
+
+  // Application directory
   private $applicationDirectory = false;
 
   public function __construct($system) {
+    // Set the system class reference
     $this->system = $system;
+
+    // Determine directories
     $this->setPackagesDirectory();
     $this->setApplicationDirectory();
+
+    // Set the migrations instance
     $this->setMigrationInstance();
+
+    // Output constructor success
     ConsoleLogger::log('Packager constructed successfully.');
   }
 
+  /**
+   * Installs a given package.
+   * @param  string $package The package name
+   */
   public function install($package = null) {
+    // Throw exception if package is null.
     if (is_null($package)) {
       throw new \Exception('Package not found.');
     }
 
+    // Get the package information
     $packageInfo = $this->information($package);
     ConsoleLogger::log('Package verified. Continuing with install.');
 
+    // Set variables for easy reference.
     $packageName = $packageInfo['install']['name'];
     $directories = $packageInfo['install']['directories'];
 
+    /**
+     * Iterate through directories, and copy over files from the
+     * package.
+     */
     $count = 0;
-
     $migrationUp = false;
-
     foreach ($directories as $directory => $files) {
       $toDirectory = $this->applicationDirectory . '/' . $directory;
 

@@ -77,8 +77,8 @@ class System {
 
     // Certain classes can not instantiate on CLI
     if (!self::isCLI()) {
-      self::$security = new Security(['config' => $this->config]);
-      self::$session  = new Session();
+      self::$security  = new Security(['config' => $this->config]);
+      self::$session   = new Session();
     }
   }
 

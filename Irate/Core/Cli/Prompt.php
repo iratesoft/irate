@@ -4,6 +4,11 @@ namespace Irate\Core\Cli;
 
 class Prompt {
 
+  /**
+   * Ability to ask a yes or no question via PHP CLI.
+   * Acceptable answers:
+   * Y/y/N/n (Enter accepts default if one is provided)
+   */
   public static function yesOrNo($question, $default = null) {
     self::output($question . ' (' . ($default ? $default : 'n') . ')');
     $handle = fopen ("php://stdin", "r");
@@ -23,6 +28,10 @@ class Prompt {
     }
   }
 
+  /**
+   * Ability to accept a custom input to a command line question.
+   * You can provide default that is accepted on enter.
+   */
   public static function input($question, $default = null) {
     self::output($question . ($default ? ' (' . $default . ')' : ''));
     $handle = fopen ("php://stdin", "r");
