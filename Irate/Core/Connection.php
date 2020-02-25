@@ -20,8 +20,6 @@ class Connection {
 
     if (!\Application\Config::DB_HOST) return false;
     if (empty(\Application\Config::DB_HOST)) return false;
-
-    \Irate\Core\Logger::log('Instantiating PDO Connection.');
     $this->instantiate();
   }
 
@@ -30,6 +28,8 @@ class Connection {
    * Application\Config DB_* variables
    */
   private function instantiate() {
+    \Irate\Core\Logger::log('Instantiating PDO Connection.');
+
     try {
       $this->client = new PDO(
           'mysql:host=' . \Application\Config::DB_HOST . ';dbname=' . \Application\Config::DB_NAME . ';charset=' . (defined('\Application\Config::DB_PASSWORD') ? \Application\Config::DB_CHARSET : 'utf8mb4'),
