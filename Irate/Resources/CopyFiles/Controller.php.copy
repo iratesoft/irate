@@ -1,0 +1,16 @@
+<?php
+
+namespace Application\Controllers;
+
+/**
+ * {CONTROLLER_NAME} controller
+ */
+class {CONTROLLER_NAME} extends \Irate\Core\Controller {
+
+  /**
+   * {CONTROLLER_NAME} index action
+   */
+  protected function index() {
+    echo "{CONTROLLER_NAME} index";
+  }
+}

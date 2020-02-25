@@ -1,0 +1,15 @@
+<?php
+
+namespace Application\Models;
+
+use Irate\System;
+
+/**
+* {MODEL_NAME} model
+*/
+class {MODEL_NAME} extends \Irate\Core\Model {
+
+  public function test() {
+    return true;
+  }
+}

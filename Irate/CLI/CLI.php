@@ -13,6 +13,7 @@ use Irate\Core\Cli\Migrations;
 use Irate\Core\Cli\Packager;
 use Irate\Core\Cli\Prompt;
 use Irate\Core\Cli\Configure;
+use Irate\Core\Cli\Generate;
 use Irate\System;
 
 // Get the command and action from CLI
@@ -42,6 +43,37 @@ switch ($command) {
 
     // Output the verison
     ConsoleLogger::log($System::$version);
+    break;
+
+  case 'generate':
+    // Action validation
+    if (!$action) {
+      ConsoleLogger::log('Action not provided.');
+      exit;
+    }
+
+    // Make sure a package is provided
+    $name = isset($argv[3]) ? $argv[3] : false;
+    if (!$name) {
+      ConsoleLogger::log('No name provided.');
+      exit;
+    }
+
+    // Instantiate system without the run method.
+    // This will make all resources available.
+    $System = new System();
+    $Generate = new Generate($System);
+
+    if ($action == 'Controller') {
+      $Generate->controller($name);
+    } elseif ($action == 'Model') {
+      $Generate->model($name);
+    } elseif ($action == 'AssetBundle') {
+      $Generate->assetBundle($name);
+    }else {
+      ConsoleLogger::log('Not supported.');
+      exit;
+    }
     break;
 
   case 'setup':
