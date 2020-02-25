@@ -24,6 +24,7 @@ class Email {
         !defined('\Application\Config::SMTP_USERNAME') ||
         !defined('\Application\Config::SMTP_PASSWORD') ||
         !defined('\Application\Config::SMTP_PORT')) {
+      \Irate\Core\Logger::log('A required SMTP variable is missing for \\Irate\\Core\\Email class.');
       $SMTP = false;
     }
 

@@ -24,6 +24,6 @@ abstract class Logger {
     ini_set('error_log', $logPath . date('Y-m-d') . '_debug.txt');
 
     // If IRATE_DEBUG is set, log it.
-    if (IRATE_DEBUG) echo "[Irate\Core\Logger] " . $text . "<br />";
+    if (IRATE_DEBUG) error_log("[Irate\Core\Logger] " . $text);
   }
 }

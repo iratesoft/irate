@@ -26,7 +26,7 @@ class Configure {
   private $system;
 
   public function __construct($vars = []) {
-    $this->CONFIG_FILES_PATH = IRATE_PATH . '/Resources/ConfigFiles/';
+    $this->CONFIG_FILES_PATH = IRATE_PATH . '/Resources/CopyFiles/';
 
     // Set each variable passed
     foreach ($vars as $key => $var) {

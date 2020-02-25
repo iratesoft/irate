@@ -16,6 +16,7 @@ abstract class Controller {
   protected $session;
   protected $db;
   protected $email;
+  protected $asset;
 
   /**
   * Class constructor
@@ -29,11 +30,14 @@ abstract class Controller {
     $this->session  = $system::$session;
     $this->db       = $system::$db;
     $this->email    = $system::$email;
+    $this->asset    = $system::$AssetBundle;
     $this->params   = $params;
   }
 
   public function __call($name, $args) {
     $method = $name;
+
+    \Irate\Core\Logger::log('Attempting to call ' . get_class($this) . '->' . $method);
 
     if (method_exists($this, $method)) {
       if ($this->before() !== false) {

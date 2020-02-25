@@ -1,0 +1,15 @@
+<?php
+
+namespace Application\Assets;
+
+/**
+ * Asset Bundle
+ */
+class {ASSET_BUNDLE_NAME} {
+
+  const CACHE_BUST = false;
+
+  const STYLES = [];
+
+  const SCRIPTS = [];
+}

@@ -25,7 +25,7 @@ set_exception_handler('Irate\Core\Error::exceptionHandler');
 
 class System {
 
-  public static $version = 'Irate Framework v0.0.1-4 RC';
+  public static $version = 'Irate Framework v0.0.1-5 RC';
 
   public $config;
   public $baseUrl = '/';
