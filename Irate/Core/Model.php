@@ -23,6 +23,9 @@ abstract class Model
   // Instance of the email class
   protected $email;
 
+  // Instance of the session class
+  protected $session;
+
   public function __construct() {
 
     // Set all class instances from System
@@ -30,6 +33,7 @@ abstract class Model
     $this->request = System::$request;
     $this->security = System::$security;
     $this->email = System::$email;
+    $this->ession = System::$session;
   }
 
   /**

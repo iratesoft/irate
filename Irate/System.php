@@ -69,16 +69,16 @@ class System {
    */
   private function instantiate() {
     self::$request     = new Request();
-    self::$view        = new View(['system' => $this, 'baseUrl' => $this->getBaseUrl()]);
     self::$db          = new Connection();
-    self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl()]);
     self::$response    = new Response();
     self::$email       = new Email(['config' => $this->config, 'view' => self::$view]);
 
     // Certain classes can not instantiate on CLI
     if (!self::isCLI()) {
-      self::$security  = new Security(['config' => $this->config]);
-      self::$session   = new Session();
+      self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl()]);
+      self::$security    = new Security(['config' => $this->config]);
+      self::$session     = new Session();
+      self::$view        = new View(['system' => $this, 'baseUrl' => $this->getBaseUrl()]);
     }
   }
 
