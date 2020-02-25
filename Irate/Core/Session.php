@@ -7,18 +7,50 @@ class Session {
   private $flashDataField = 'flash_data';
   private $flashData = [];
 
+  private $userDataField  = 'user_data';
+
   public function __construct() {
     // Start session if not active.
     if (!$this->sessionStarted()) session_start();
-    $this->set();
+    $this->setClassVars();
     $this->unsetFlashData();
   }
 
-  private function set() {
-    if (!isset($_SESSION[$this->flashDataField])) return false;
-    $this->flashData = $_SESSION[$this->flashDataField];
+  public function destroy() {
+    session_destroy();
+    return true;
   }
 
+  public function id() {
+    return session_id();
+  }
+
+  /**
+   * ============================================
+   * USER DATA
+   * ============================================
+   */
+
+  public function setUserData($key, $data = null) {
+    if (!isset($_SESSION[$this->userDataField])) $_SESSION[$this->userDataField] = [];
+    if (is_array($key)) $_SESSION[$this->userDataField] = $key;
+    if (is_string($key)) $_SESSION[$this->userDataField][$key] = $data;
+  }
+
+  public function unsetUserData($key) {
+    if (is_null($key) && isset($_SESSION[$this->userDataField])) unset($_SESSION[$this->userDataField]);
+    if (isset($_SESSION[$this->userDataField][$key])) unset($_SESSION[$this->userDataField][$key]);
+  }
+
+  public function userData($key = null) {
+    if (!isset($_SESSION[$this->userDataField])) return false;
+
+    if (!is_null($key)) {
+      return isset($_SESSION[$this->userDataField][$key]) ? $_SESSION[$this->userDataField][$key] : false;
+    }
+
+    return $_SESSION[$this->userDataField];
+  }
 
   /**
    * ============================================
@@ -61,5 +93,10 @@ class Session {
       }
     }
     return false;
+  }
+
+  private function setClassVars() {
+   if (!isset($_SESSION[$this->flashDataField])) return false;
+   $this->flashData = $_SESSION[$this->flashDataField];
   }
 }
