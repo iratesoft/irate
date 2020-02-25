@@ -11,6 +11,7 @@ class Connection {
 
   public function __construct() {
     if (!\Application\Config::DB_HOST) return false;
+    if (empty(\Application\Config::DB_HOST)) return false;
     $this->instantiate();
   }
 

@@ -11,6 +11,7 @@ class AssetBundle {
   public static $CACHE_BUST = false;
 
   private static $baseUrl = false;
+  private $bundleName = '\Application\Assets\DefaultAssetBundle';
 
   // Class constructor
   public function __construct($vars = []) {
@@ -79,11 +80,13 @@ class AssetBundle {
     if (is_null($bundleName)) {
       if (class_exists('\Application\Assets\DefaultAssetBundle')) {
         $this->bundle = new \Application\Assets\DefaultAssetBundle;
+        $this->bundleName = $bundleName;
       }
     } else {
       $bundleClassName = '\Application\Assets\\' . $bundleName;
       if (class_exists($bundleClassName)) {
         $this->bundle = new $bundleClassName;
+        $this->bundleName = $bundleName;
       }
     }
   }
@@ -94,9 +97,17 @@ class AssetBundle {
    */
   private function setBundleVars() {
     if ($this->bundle !== false) {
-      if ($this->bundle::SCRIPTS)     self::$SCRIPTS     = $this->bundle::SCRIPTS;
-      if ($this->bundle::STYLES)      self::$STYLES      = $this->bundle::STYLES;
-      if ($this->bundle::CACHE_BUST)  self::$CACHE_BUST  = $this->bundle::CACHE_BUST;
+      if (defined("$this->bundleName::SCRIPTS")) {
+        if ($this->bundle::SCRIPTS)     self::$SCRIPTS     = $this->bundle::SCRIPTS;
+      }
+
+      if (defined("$this->bundleName::STYLES")) {
+        if ($this->bundle::STYLES)      self::$STYLES      = $this->bundle::STYLES;
+      }
+
+      if (defined("$this->bundleName::CACHE_BUST")) {
+        if ($this->bundle::CACHE_BUST)  self::$CACHE_BUST  = $this->bundle::CACHE_BUST;
+      }
     }
   }
 }

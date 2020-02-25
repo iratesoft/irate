@@ -61,8 +61,10 @@ class Response {
         break;
     }
 
+    // Set the content type.
     header('Content-type: ' . $this->contentTypeFormatted);
 
+    // If there is data, and the content type is JSON, output it.
 		if (!is_null($data)) {
 			if ($this->contentType == 'json') {
 				if (is_array($data) || is_object($data)) {

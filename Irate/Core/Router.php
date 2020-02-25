@@ -10,9 +10,11 @@ namespace Irate\Core;
 class Router
 {
 
+    // Arrays needed
     protected $routes = [];
     protected $params = [];
 
+    // Instance of System passed on instantiation.
     private $system = false;
 
     /**
@@ -34,6 +36,10 @@ class Router
       ]);
     }
 
+    /**
+     * Adds an array of routes to the class
+     * @param array $routes
+     */
     public function addRoutes($routes) {
       foreach ($routes as $route) {
         $params = (isset($route['params']) ? $route['params'] : []);
@@ -41,6 +47,9 @@ class Router
       }
     }
 
+    /**
+     * Test regex, and add route
+     */
     public function add($route, $params = []) {
       $route = preg_replace('/\//', '\\/', $route);
       $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
@@ -49,10 +58,17 @@ class Router
       $this->routes[$route] = $params;
     }
 
+    /**
+     * Class route getter
+     */
     public function getRoutes() {
       return $this->routes;
     }
 
+    /**
+     * Attempts to match a route to the given
+     * URL.
+     */
     public function match($url) {
 
       // If no route, then activate defaults.
@@ -72,6 +88,7 @@ class Router
         return true;
       }
 
+      // Iterate through each, and try to match the regex.
       foreach ($this->routes as $route => $params) {
         if (preg_match($route, $url, $matches)) {
           // Get named capture group values
@@ -98,10 +115,18 @@ class Router
       return false;
     }
 
+    /**
+     * Class params getter
+     */
     public function getParams() {
       return $this->params;
     }
 
+    /**
+     * Run the route method. This will match the route,
+     * and then spin up the Controller->action method based
+     * on what it finds.
+     */
     public function run($url) {
       $url = $this->removeQueryStringVariables($url);
 
@@ -129,14 +154,33 @@ class Router
       }
     }
 
+    /**
+     * Converts a String to StudlyCaps
+     *
+     * This Phrase would then become ThisPhrase
+     * This-Phrase would become ThisPhrase
+     */
     protected function convertToStudlyCaps($string) {
       return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
 
+    /**
+     * Simply returns a StudlyCasePhrase with the first
+     * letter lowercase.
+     *
+     * This-Phrase becomes thisPhrase
+     */
     protected function convertToCamelCase($string) {
       return lcfirst($this->convertToStudlyCaps($string));
     }
 
+    /**
+     * Remove all query strings from the URL, return JUST
+     * the url.
+     *
+     * Example: http://localhost/?foo=bar
+     * This method removes "?foo=bar"
+     */
     protected function removeQueryStringVariables($url) {
       if ($url != '') {
         $parts = explode('&', $url, 2);
@@ -146,6 +190,10 @@ class Router
       return $url;
     }
 
+    /**
+     * Determine the namespace for a route.
+     * If namespace is set in params, set it here.
+     */
     protected function getNamespace() {
       $namespace = 'Application\Controllers\\';
       if (array_key_exists('namespace', $this->params)) $namespace .= $this->params['namespace'] . '\\';

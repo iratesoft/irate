@@ -13,7 +13,7 @@ class Configure {
 
   // Variables that need to be set for setup
   public $SETUP_DB = false;
-  public $DB_HOST = 'false';
+  public $DB_HOST = '';
   public $DB_NAME = '';
   public $DB_USER = '';
   public $DB_PASS = '';

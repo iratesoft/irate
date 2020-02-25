@@ -19,15 +19,24 @@ class Email {
     // Instantiate PHPMailer
     $this->mail = new PHPMailer(true);
 
-    // Check if SMTP setings are provided.
-    if ($this->config::SMTP_HOST && !empty($this->config::SMTP_HOST)) {
-      $this->mail->isSMTP();
-      $this->mail->Host       = $this->config::SMTP_HOST;
-      $this->mail->SMTPAuth   = true;
-      $this->mail->Username   = $this->config::SMTP_USERNAME;
-      $this->mail->Password   = $this->config::SMTP_PASSWORD;
-      $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-      $this->mail->Port       = $this->config::SMTP_PORT;
+    $SMTP = true;
+    if (!defined('\Application\Config::SMTP_HOST') ||
+        !defined('\Application\Config::SMTP_USERNAME') ||
+        !defined('\Application\Config::SMTP_PASSWORD') ||
+        !defined('\Application\Config::SMTP_PORT')) {
+      $SMTP = false;
+    }
+
+    if ($SMTP) {
+      if ($this->config::SMTP_HOST && !empty($this->config::SMTP_HOST)) {
+        $this->mail->isSMTP();
+        $this->mail->Host       = $this->config::SMTP_HOST;
+        $this->mail->SMTPAuth   = true;
+        $this->mail->Username   = $this->config::SMTP_USERNAME;
+        $this->mail->Password   = $this->config::SMTP_PASSWORD;
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->Port       = $this->config::SMTP_PORT;
+      }
     }
   }
 
