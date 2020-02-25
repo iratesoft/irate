@@ -25,9 +25,11 @@ class Router
     public function __construct($system) {
       $this->system = $system;
 
-      // Add routes from config
-      if (\Application\Config::ROUTES) {
-        $this->addRoutes(\Application\Config::ROUTES);
+      // Make sure routes actually is defined in class.
+      if (defined('\Application\Config::ROUTES')) {
+        if (\Application\Config::ROUTES) {
+          $this->addRoutes(\Application\Config::ROUTES);
+        }
       }
 
       // Adding the default route by default.
@@ -75,12 +77,12 @@ class Router
       if (empty($url)) {
         $this->params = [
           'controller' => (
-            \Application\Config::ROUTE_DEFAULT_CONTROLLER ?
+            defined('\Application\Config::ROUTE_DEFAULT_CONTROLLER') ?
             \Application\Config::ROUTE_DEFAULT_CONTROLLER :
             'Site'
           ),
           'action' => (
-            \Application\Config::ROUTE_DEFAULT_ACTION ?
+            defined('\Application\Config::ROUTE_DEFAULT_ACTION') ?
             \Application\Config::ROUTE_DEFAULT_ACTION :
             'index'
           )

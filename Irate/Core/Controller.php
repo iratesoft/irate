@@ -35,6 +35,8 @@ abstract class Controller {
   public function __call($name, $args) {
     $method = $name;
 
+    \Irate\Core\Logger::log('Attempting to call ' . get_class($this) . '->' . $method);
+
     if (method_exists($this, $method)) {
       if ($this->before() !== false) {
         call_user_func_array([$this, $method], $args);
