@@ -130,6 +130,7 @@ class Router
      * on what it finds.
      */
     public function run($url) {
+      if ($url === 'favicon.ico') exit;
       $url = $this->removeQueryStringVariables($url);
 
       if ($this->match($url)) {

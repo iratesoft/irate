@@ -16,6 +16,7 @@ abstract class Controller {
   protected $session;
   protected $db;
   protected $email;
+  protected $asset;
 
   /**
   * Class constructor
@@ -29,6 +30,7 @@ abstract class Controller {
     $this->session  = $system::$session;
     $this->db       = $system::$db;
     $this->email    = $system::$email;
+    $this->asset    = $system::$AssetBundle;
     $this->params   = $params;
   }
 

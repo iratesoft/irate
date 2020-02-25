@@ -51,9 +51,9 @@ class Error
     if ($showErrors) {
         echo "<h1>Fatal error</h1>";
         echo "<p>Uncaught exception: '" . get_class($exception) . "'</p>";
-        echo "<p>Message: '" . $exception->getMessage() . "'</p>";
+        echo "<p>Message: '"        . $exception->getMessage() . "'</p>";
         echo "<p>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
-        echo "<p>Thrown in '" . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
+        echo "<p>Thrown in '"       . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
     } else {
         // Set the error log path.
         ini_set('error_log', $logPath . date('Y-m-d') . '.txt');
@@ -62,7 +62,7 @@ class Error
         $message = "Uncaught exception: '" . get_class($exception) . "'";
         $message .= " with message '" . $exception->getMessage() . "'";
         $message .= "\nStack trace: " . $exception->getTraceAsString();
-        $message .= "\nThrown in '" . $exception->getFile() . "' on line " . $exception->getLine();
+        $message .= "\nThrown in '"   . $exception->getFile() . "' on line " . $exception->getLine();
         error_log($message);
 
         // Log the template for the specific error.

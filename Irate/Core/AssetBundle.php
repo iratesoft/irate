@@ -27,7 +27,6 @@ class AssetBundle {
     }
 
     $this->setBundle();
-    $this->setBundleVars();
   }
 
   /**
@@ -36,6 +35,10 @@ class AssetBundle {
   public function scripts() {
     $res = "";
 
+    /**
+     * Iterate through each URL, validate the URL, if it's relative,
+     * prepend the Application BASE_URL if provided.
+     */
     foreach (self::$SCRIPTS as $script) {
       if (strpos($script, $_SERVER['HTTP_HOST']) === false &&
           strpos($script, 'http://') === false             &&
@@ -59,6 +62,10 @@ class AssetBundle {
   public function styles() {
     $res = "";
 
+    /**
+     * Iterate through each URL, validate the URL, if it's relative,
+     * prepend the Application BASE_URL if provided.
+     */
     foreach (self::$STYLES as $style) {
       if (strpos($style, $_SERVER['HTTP_HOST']) === false &&
           strpos($style, 'http://') === false           &&
@@ -81,7 +88,7 @@ class AssetBundle {
    * by default if it exists.
    * @param string $bundleName (Needs to match AssetBundle Classname)
    */
-  private function setBundle($bundleName = null) {
+  public function setBundle($bundleName = null) {
     if (is_null($bundleName)) {
       if (class_exists('\Application\Assets\DefaultAssetBundle')) {
         $this->bundle = new \Application\Assets\DefaultAssetBundle;
@@ -93,6 +100,8 @@ class AssetBundle {
         $this->bundleName = $bundleName;
       }
     }
+
+    $this->setBundleVars();
   }
 
   /**
@@ -103,14 +112,23 @@ class AssetBundle {
     if ($this->bundle !== false) {
       if (defined($this->bundleName . "::SCRIPTS")) {
         if ($this->bundle::SCRIPTS)     self::$SCRIPTS     = $this->bundle::SCRIPTS;
+        else self::$SCRIPTS = [];
+      } else {
+        self::$SCRIPTS = [];
       }
 
       if (defined($this->bundleName . "::STYLES")) {
         if ($this->bundle::STYLES)      self::$STYLES      = $this->bundle::STYLES;
+        else self::$STYLES = [];
+      } else {
+        self::$STYLES = [];
       }
 
       if (defined($this->bundleName . "::CACHE_BUST")) {
         if ($this->bundle::CACHE_BUST)  self::$CACHE_BUST  = $this->bundle::CACHE_BUST;
+        else self::$CACHE_BUST = false;
+      } else {
+        self::$CACHE_BUST = false;
       }
     }
   }
