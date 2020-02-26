@@ -29,11 +29,11 @@ abstract class Model
   public function __construct() {
 
     // Set all class instances from System
-    $this->db = System::$db;
-    $this->request = System::$request;
+    $this->db       = System::$db;
+    $this->request  = System::$request;
     $this->security = System::$security;
-    $this->email = System::$email;
-    $this->ession = System::$session;
+    $this->email    = System::$email;
+    $this->session  = System::$session;
   }
 
   /**
@@ -154,7 +154,7 @@ abstract class Model
    */
   public function delete($table, $where = null) {
     // Delete from table using where clause.
-    $sql = "DELETE FROM " . $table . (!is_null($where) ? " WHERE " . $where; : "");
+    $sql = "DELETE FROM " . $table . (!is_null($where) ? " WHERE " . $where : "");
 
     try {
       // Prepare the statement.
