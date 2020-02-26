@@ -15,6 +15,9 @@ class Security {
     // Start session if not active.
     if (!$this->sessionStarted()) session_start();
 
+    // Attempt to generate a new token.
+    $this->generate();
+
     // Set the token
     $this->setToken();
   }
@@ -55,9 +58,6 @@ class Security {
       // If it did not pass, stop the application here.
       if (!$passed) throw new \Exception('CSRF Token is invalid.');
     }
-
-    // Attempt to generate a new token.
-    $this->generate();
   }
 
   /**

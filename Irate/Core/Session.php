@@ -37,7 +37,7 @@ class Session {
     if (is_string($key)) $_SESSION[$this->userDataField][$key] = $data;
   }
 
-  public function unsetUserData($key) {
+  public function unsetUserData($key = null) {
     if (is_null($key) && isset($_SESSION[$this->userDataField])) unset($_SESSION[$this->userDataField]);
     if (isset($_SESSION[$this->userDataField][$key])) unset($_SESSION[$this->userDataField][$key]);
   }

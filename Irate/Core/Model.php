@@ -34,6 +34,17 @@ abstract class Model
     $this->security = System::$security;
     $this->email    = System::$email;
     $this->session  = System::$session;
+
+    $this->instantiate();
+  }
+
+  /**
+   * Function that will run immediately after construct
+   * so the actual model class doesn't need to run the constructor
+   * and mess with the class var settings.
+   */
+  public function instantiate() {
+
   }
 
   /**
