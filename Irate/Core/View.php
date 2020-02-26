@@ -56,6 +56,7 @@ class View
     self::$Smarty->assign('app', self::$system);
     self::$Smarty->assign('asset', self::$system::$AssetBundle);
     self::$Smarty->assign('security', self::$system::$security);
+    self::$Smarty->assign('session', self::$system::$session);
 
     // Display the template file.
     self::$Smarty->display("$template.tpl");
