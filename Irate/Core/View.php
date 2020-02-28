@@ -58,6 +58,9 @@ class View
     self::$Smarty->assign('security', self::$system::$security);
     self::$Smarty->assign('session', self::$system::$session);
 
+    // Register HTML Helper
+    self::$Smarty->registerClass("Html", "\\Irate\\Helpers\\Html");
+
     // Display the template file.
     self::$Smarty->display("$template.tpl");
   }
