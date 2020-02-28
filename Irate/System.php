@@ -44,13 +44,20 @@ class System {
   public static $session;
   public static $email;
 
-  public function __construct() {
+  public function __construct($config = []) {
     // Set config and params
     $this->setConfig();
     $this->setParams();
 
+    // If configuration states NOT to run instance with a
+    // database connection.
+    $dbInstantiation = true;
+    if (isset($config['db'])) {
+      $dbInstantiation = $config['db'];
+    }
+
     // Begin instantiating the classes.
-    $this->instantiate();
+    $this->instantiate($dbInstantiation);
   }
 
   public function run() {
@@ -67,9 +74,9 @@ class System {
    * Instantiates resource classes that can be
    * used throughout
    */
-  private function instantiate() {
+  private function instantiate($dbInstantiation) {
     self::$request     = new Request();
-    self::$db          = new Connection();
+    if ($dbInstantiation) self::$db = new Connection();
     self::$response    = new Response();
     self::$email       = new Email(['config' => $this->config, 'view' => self::$view]);
 
