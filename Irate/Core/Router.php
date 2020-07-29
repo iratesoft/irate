@@ -26,9 +26,9 @@ class Router
       $this->system = $system;
 
       // Make sure routes actually is defined in class.
-      if (defined('\Application\Config::ROUTES')) {
-        if (\Application\Config::ROUTES) {
-          $this->addRoutes(\Application\Config::ROUTES);
+      if (isset($this->system->config->ROUTES)) {
+        if ($this->system->config->ROUTES) {
+          $this->addRoutes($this->system->config->ROUTES);
         }
       }
 
@@ -77,13 +77,13 @@ class Router
       if (empty($url)) {
         $this->params = [
           'controller' => (
-            defined('\Application\Config::ROUTE_DEFAULT_CONTROLLER') ?
-            \Application\Config::ROUTE_DEFAULT_CONTROLLER :
+            isset($this->system->config->ROUTE_DEFAULT_CONTROLLER) ?
+            $this->system->config->ROUTE_DEFAULT_CONTROLLER :
             'Site'
           ),
           'action' => (
-            defined('\Application\Config::ROUTE_DEFAULT_ACTION') ?
-            \Application\Config::ROUTE_DEFAULT_ACTION :
+            isset($this->system->config->ROUTE_DEFAULT_ACTION) ?
+            $this->system->config->ROUTE_DEFAULT_ACTION :
             'index'
           )
         ];

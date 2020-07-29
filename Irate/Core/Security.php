@@ -29,12 +29,12 @@ class Security {
    */
 
   public function encode($string) {
-    return base64_encode($string . $this->config::ENCODING_KEY);
+    return base64_encode($string . $this->config->ENCODING_KEY);
   }
 
   public function decode($string) {
     $decoded = base64_decode($string);
-    return str_replace($this->config::ENCODING_KEY, '', $decoded);
+    return str_replace($this->config->ENCODING_KEY, '', $decoded);
   }
 
 

@@ -20,23 +20,23 @@ class Email {
     $this->mail = new PHPMailer(true);
 
     $SMTP = true;
-    if (!defined('\Application\Config::SMTP_HOST') ||
-        !defined('\Application\Config::SMTP_USERNAME') ||
-        !defined('\Application\Config::SMTP_PASSWORD') ||
-        !defined('\Application\Config::SMTP_PORT')) {
+    if (!isset($this->config->SMTP_HOST) ||
+        !isset($this->config->SMTP_USERNAME) ||
+        !isset($this->config->SMTP_PASSWORD) ||
+        !isset($this->config->SMTP_PORT)) {
       \Irate\Core\Logger::log('A required SMTP variable is missing for \\Irate\\Core\\Email class.');
       $SMTP = false;
     }
 
     if ($SMTP) {
-      if ($this->config::SMTP_HOST && !empty($this->config::SMTP_HOST)) {
+      if ($this->config->SMTP_HOST && !empty($this->config->SMTP_HOST)) {
         $this->mail->isSMTP();
-        $this->mail->Host       = $this->config::SMTP_HOST;
+        $this->mail->Host       = $this->config->SMTP_HOST;
         $this->mail->SMTPAuth   = true;
-        $this->mail->Username   = $this->config::SMTP_USERNAME;
-        $this->mail->Password   = $this->config::SMTP_PASSWORD;
+        $this->mail->Username   = $this->config->SMTP_USERNAME;
+        $this->mail->Password   = $this->config->SMTP_PASSWORD;
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->mail->Port       = $this->config::SMTP_PORT;
+        $this->mail->Port       = $this->config->SMTP_PORT;
       }
     }
   }

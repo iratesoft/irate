@@ -20,10 +20,8 @@ class Error
      * set it to false by default.
      */
     $showErrors = false;
-    if (defined("\Application\Config::SHOW_ERRORS")) {
-      if (\Application\Config::SHOW_ERRORS === true) {
-        $showErrors = true;
-      }
+    if (IRATE_SHOW_ERRORS === true) {
+      $showErrors = true;
     }
 
     /**
@@ -33,8 +31,8 @@ class Error
      * set it to the below by default.
      */
     $logPath = ROOT_PATH . '/Logs/';
-    if (defined("\Application\Config::LOG_PATH")) {
-      $logPath = \Application\Config::LOG_PATH;
+    if (defined("IRATE_LOG_PATH")) {
+      $logPath = IRATE_LOG_PATH;
     }
 
     // Get the exception code
@@ -66,7 +64,7 @@ class Error
         error_log($message);
 
         // Log the template for the specific error.
-        View::renderTemplate("errors/" . $code);
+        // View::renderTemplate("errors/" . $code);
     }
   }
 }

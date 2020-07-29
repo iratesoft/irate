@@ -8,7 +8,7 @@ defined('IRATE_PATH') or define('IRATE_PATH', __DIR__ . '/..');
 require ROOT_PATH . '/vendor/autoload.php';
 
 // Package usages
-use Irate\Core\Cli\ConsoleLogger;
+use \Irate\Core\Cli\ConsoleLogger;
 use Irate\Core\Cli\Migrations;
 use Irate\Core\Cli\Packager;
 use Irate\Core\Cli\Prompt;

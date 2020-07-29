@@ -8,18 +8,24 @@ class Connection {
 
   public $client = null;
   public $connection = false;
+  private $config = false;
 
-  public function __construct() {
-    if (!defined('\Application\Config::DB_HOST') ||
-        !defined('\Application\Config::DB_NAME') ||
-        !defined('\Application\Config::DB_USER') ||
-        !defined('\Application\Config::DB_PASSWORD')) {
+  public function __construct($vars = []) {
+
+    if (isset($vars['config'])) {
+      $this->config = $vars['config'];
+    }
+
+    if (!isset($this->config->DB_HOST) ||
+        !isset($this->config->DB_NAME) ||
+        !isset($this->config->DB_USER) ||
+        !isset($this->config->DB_PASSWORD)) {
       \Irate\Core\Logger::log('One of the DB_ constants are missing. Skipping Database Connection.');
       return false;
     }
 
-    if (!\Application\Config::DB_HOST) return false;
-    if (empty(\Application\Config::DB_HOST)) return false;
+    if (!$this->config->DB_HOST) return false;
+    if (empty($this->config->DB_HOST)) return false;
     $this->instantiate();
   }
 
@@ -31,10 +37,11 @@ class Connection {
     \Irate\Core\Logger::log('Instantiating PDO Connection.');
 
     try {
+
       $this->client = new PDO(
-          'mysql:host=' . \Application\Config::DB_HOST . ';dbname=' . \Application\Config::DB_NAME . ';charset=' . (defined('\Application\Config::DB_PASSWORD') ? \Application\Config::DB_CHARSET : 'utf8mb4'),
-          \Application\Config::DB_USER,
-          \Application\Config::DB_PASSWORD
+          'mysql:host=' . $this->config->DB_HOST . ';dbname=' . $this->config->DB_NAME . ';charset=' . (isset($this->config->DB_CHARSET) ? $this->config->DB_CHARSET : 'utf8mb4'),
+          $this->config->DB_USER,
+          $this->config->DB_PASSWORD
       );
 
       $this->connection = true;

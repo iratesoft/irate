@@ -15,13 +15,10 @@ use Irate\Core\Session;
 use Irate\Core\Email;
 
 // Define globals if not already.
-defined('IRATE_PATH')     or define('IRATE_PATH',  __DIR__);
-defined('IRATE_ENV')      or define('IRATE_ENV',   'dev');
-defined('IRATE_DEBUG')    or define('IRATE_DEBUG', false);
-
-// Set error & exception handlers
-set_error_handler('Irate\Core\Error::errorHandler');
-set_exception_handler('Irate\Core\Error::exceptionHandler');
+defined('IRATE_PATH')        or define('IRATE_PATH',  __DIR__);
+defined('IRATE_ENV')         or define('IRATE_ENV',   'dev');
+defined('IRATE_DEBUG')       or define('IRATE_DEBUG', false);
+defined('IRATE_PUBLIC_PATH') or define('IRATE_PUBLIC_PATH', IRATE_PATH . '/../public');
 
 class System {
 
@@ -75,16 +72,32 @@ class System {
    * used throughout
    */
   private function instantiate($dbInstantiation) {
-    self::$request     = new Request();
-    if ($dbInstantiation) self::$db = new Connection();
-    self::$response    = new Response();
+    defined('IRATE_SHOW_ERRORS') or define('IRATE_SHOW_ERRORS', (
+      isset($this->config->SHOW_ERRORS) ?
+      $this->config->SHOW_ERRORS :
+      false
+    ));
+    
+    defined('IRATE_LOG_PATH') or define('IRATE_LOG_PATH', (
+      isset($this->config->LOG_PATH) ?
+      $this->config->LOG_PATH :
+      ROOT_PATH . '/logs/'
+    ));
+
+    // Set error & exception handlers
+    set_error_handler('Irate\Core\Error::errorHandler');
+    set_exception_handler('Irate\Core\Error::exceptionHandler');
+
+    self::$request     = new Request(['config' => $this->config]);
+    if ($dbInstantiation) self::$db = new Connection(['config' => $this->config]);
+    self::$response    = new Response(['config' => $this->config]);
     self::$email       = new Email(['config' => $this->config, 'view' => self::$view]);
 
     // Certain classes can not instantiate on CLI
     if (!self::isCLI()) {
-      self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl()]);
+      self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl(), 'config' => $this->config]);
       self::$security    = new Security(['config' => $this->config]);
-      self::$session     = new Session();
+      self::$session     = new Session(['config' => $this->config]);
       self::$view        = new View(['system' => $this, 'baseUrl' => $this->getBaseUrl()]);
     }
   }
@@ -94,18 +107,20 @@ class System {
    * the system itself. (System->config::PARAMS for example)
    */
   private function setConfig() {
-    if (!class_exists('\Application\Config'))
-      throw new \Exception('\Application\Config does not exist.');
+    if (!file_exists(ROOT_PATH . '/Application/Config.php'))
+      throw new \Exception('/Application/Config.php does not exist.');
 
-    $this->config = new \Application\Config;
+    $config = require ROOT_PATH . '/Application/Config.php';
+
+    $this->config = $config;
   }
 
   /**
    * Sets parameters for system.
    */
   private function setParams() {
-    if (\Application\Config::PARAMS) {
-      self::$params = \Application\Config::PARAMS;
+    if (isset($this->config->PARAMS)) {
+      self::$params = $this->config->PARAMS;
     }
   }
 
@@ -120,8 +135,8 @@ class System {
   }
 
   public function getBaseUrl() {
-    if ($this->config::BASE_URL) {
-      return $this->config::BASE_URL;
+    if ($this->config->BASE_URL) {
+      return $this->config->BASE_URL;
     } else {
       return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     }

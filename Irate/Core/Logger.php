@@ -16,9 +16,6 @@ abstract class Logger {
      * set it to the below by default.
      */
     $logPath = ROOT_PATH . '/Logs/';
-    if (defined("\Application\Config::LOG_PATH")) {
-      $logPath = \Application\Config::LOG_PATH;
-    }
 
     // Set the error log path.
     ini_set('error_log', $logPath . date('Y-m-d') . '_debug.txt');
