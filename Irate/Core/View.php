@@ -4,6 +4,10 @@ namespace Irate\Core;
 
 use \Smarty;
 
+define("HTML_MINIFY_URL_ENABLED", false);
+
+include __DIR__ . '/Smarty/HTMLMinify.smarty.php';
+
 /**
  * View
  *
@@ -14,15 +18,20 @@ class View
   private static $Smarty;
   private static $baseUrl;
   private static $system;
+  private static $config;
 
   // Class constructor
-  public function __construct($vars  =[]) {
+  public function __construct($vars = []) {
     if (isset($vars['system'])) {
       self::$system = $vars['system'];
     }
 
     if (isset($vars['baseUrl'])) {
       self::$baseUrl = $vars['baseUrl'];
+    }
+
+    if (isset($vars['config'])) {
+      self::$config = $vars['config'];
     }
 
     self::instantiateSmarty();
@@ -36,6 +45,8 @@ class View
     self::$Smarty->cache_dir     = ROOT_PATH . '/Application/Cache';
     self::$Smarty->compile_dir   = ROOT_PATH . '/Application/ViewsCompiled';
     self::$Smarty->force_compile = false;
+
+    self::$Smarty->registerFilter("output", "minify_html");
   }
 
   // Render a template

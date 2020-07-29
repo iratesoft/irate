@@ -2,21 +2,28 @@
 
 namespace Irate\Core;
 
+use \MatthiasMullie\Minify;
+
 class AssetBundle {
 
   // Bundle informatino
   private $bundle = false;
-  private $bundleName = '\\Application\\Assets\\DefaultAssetBundle';
+  private $bundleName    = '\\Application\\Assets\\DefaultAssetBundle';
+  private $bundleScripts = false;
+  private $bundleStyles  = false;
 
   // Assets
   public static $SCRIPTS = [];
   public static $STYLES  = [];
+  public static $BUNDLE_SCRIPTS = false;
+  public static $BUNDLE_STYLES  = false;
 
   // Cache busting (false by default)
   public static $CACHE_BUST = false;
 
   // Base URL of application
   private static $baseUrl = false;
+  private static $config = false;
 
   // Class constructor
   public function __construct($vars = []) {
@@ -25,6 +32,12 @@ class AssetBundle {
     if (isset($vars['baseUrl'])) {
       self::$baseUrl = $vars['baseUrl'];
     }
+
+    if (isset($vars['config'])) {
+      self::$config = $vars['config'];
+    }
+
+    if (isset($_ENV['baseUrl'])) self::$baseUrl =$_ENV['baseUrl'];
 
     $this->setBundle();
   }
@@ -40,6 +53,7 @@ class AssetBundle {
      * prepend the Application BASE_URL if provided.
      */
     foreach (self::$SCRIPTS as $script) {
+
       if (strpos($script, $_SERVER['HTTP_HOST']) === false &&
           strpos($script, 'http://') === false             &&
           strpos($script, 'https://') === false) {
@@ -51,6 +65,34 @@ class AssetBundle {
       }
 
       $res .= "<script src=\"" . $script . (self::$CACHE_BUST ? '?v=' . time() : '') . "\"></script>\r\n";
+    }
+
+    if ($this::$BUNDLE_SCRIPTS && IRATE_ENV === 'production') {
+
+      $generatedFileRelativePath = '/generated/app.bundle.js';
+      $generatedFileAbsolutePath = IRATE_PUBLIC_PATH . $generatedFileRelativePath;
+      $fileExists = file_exists($generatedFileAbsolutePath);
+      $buildFile = false;
+
+      if (!$fileExists) $buildFile = true;
+
+      if ($buildFile === true) {
+        $minifier = new Minify\JS();
+
+        foreach (self::$SCRIPTS as $script) {
+          $minifier->add(IRATE_PUBLIC_PATH . $script);
+        }
+
+        file_put_contents($generatedFileAbsolutePath, $minifier->minify());
+      }
+
+      $generatedUrl = (
+        substr(self::$baseUrl, -1) === '/' ?
+        self::$baseUrl . (substr($generatedFileRelativePath, 1) === '/' ? substr($generatedFileRelativePath, 1) : $generatedFileRelativePath) :
+        self::$baseUrl . '/' . ($generatedFileRelativePath[0] === '/' ? substr($generatedFileRelativePath, 1) : $generatedFileRelativePath)
+      );
+
+      return "<script src=\"" . $generatedUrl . (self::$CACHE_BUST ? '?v=' . time() : '') . "\"></script>\r\n";
     }
 
     return $res;
@@ -78,6 +120,34 @@ class AssetBundle {
       }
 
       $res .= "<link href=\"" . $style . (self::$CACHE_BUST ? '?v=' . time() : '') . "\" rel=\"stylesheet\">\r\n";
+    }
+
+    if ($this::$BUNDLE_STYLES && IRATE_ENV === 'production') {
+
+      $generatedFileRelativePath = '/generated/app.bundle.css';
+      $generatedFileAbsolutePath = IRATE_PUBLIC_PATH . $generatedFileRelativePath;
+      $fileExists = file_exists($generatedFileAbsolutePath);
+      $buildFile = false;
+
+      if (!$fileExists) $buildFile = true;
+
+      if ($buildFile === true) {
+        $minifier = new Minify\CSS();
+
+        foreach (self::$STYLES as $style) {
+          $minifier->add(IRATE_PUBLIC_PATH . $style);
+        }
+
+        file_put_contents($generatedFileAbsolutePath, $minifier->minify());
+      }
+
+      $generatedUrl = (
+        substr(self::$baseUrl, -1) === '/' ?
+        self::$baseUrl . (substr($generatedFileRelativePath, 1) === '/' ? substr($generatedFileRelativePath, 1) : $generatedFileRelativePath) :
+        self::$baseUrl . '/' . ($generatedFileRelativePath[0] === '/' ? substr($generatedFileRelativePath, 1) : $generatedFileRelativePath)
+      );
+
+      return "<link href=\"" . $generatedUrl . (self::$CACHE_BUST ? '?v=' . time() : '') . "\" rel=\"stylesheet\">\r\n";
     }
 
     return $res;
@@ -129,6 +199,20 @@ class AssetBundle {
         else self::$CACHE_BUST = false;
       } else {
         self::$CACHE_BUST = false;
+      }
+
+      if (defined($this->bundleName . "::BUNDLE_SCRIPTS")) {
+        if ($this->bundle::BUNDLE_SCRIPTS)  self::$BUNDLE_SCRIPTS  = $this->bundle::BUNDLE_SCRIPTS;
+        else self::$BUNDLE_SCRIPTS = false;
+      } else {
+        self::$BUNDLE_SCRIPTS = false;
+      }
+
+      if (defined($this->bundleName . "::BUNDLE_STYLES")) {
+        if ($this->bundle::BUNDLE_STYLES)  self::$BUNDLE_STYLES  = $this->bundle::BUNDLE_STYLES;
+        else self::$BUNDLE_STYLES = false;
+      } else {
+        self::$BUNDLE_STYLES = false;
       }
     }
   }
