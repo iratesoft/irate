@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Wrapper for the Irate Framework CLI.
+ * This should be included in your application for things
+ * like migrations, packager, etc.
+ */
+
+defined('ROOT_PATH') or define('ROOT_PATH', __DIR__);
+
+if (!is_dir(ROOT_PATH . '/vendor')) {
+  echo "Vendor path does not exist. please install composer packages." . PHP_EOL;
+  exit;
+}
+
+include ROOT_PATH . '/../Irate/CLI/CLI.php';

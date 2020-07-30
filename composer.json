@@ -12,11 +12,14 @@
   "require": {
     "php": ">=5.4.0",
     "smarty/smarty": "^3.1",
-    "phpmailer/phpmailer": "^6.1"
+    "phpmailer/phpmailer": "^6.1",
+    "matthiasmullie/minify": "^1.3",
+    "vlucas/phpdotenv": "^5.1"
   },
   "autoload": {
     "psr-4": {
-      "Irate\\": "Irate/"
+      "Irate\\": "Irate/",
+      "Application\\": "Application/"
     }
   },
   "support": {

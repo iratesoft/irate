@@ -1,0 +1,4 @@
+
+    {$asset->scripts()}
+  </body>
+</html>
