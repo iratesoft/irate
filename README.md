@@ -12,20 +12,17 @@ Join our discord server for real-time discussion on feature requests, updates, a
 
 # Setup Irate Framework (CLI)
 - From the root directory, run `composer install`
-- Load the site.
-
-# .env file (optional)
-
-Create a .env file in the root directory of the project with the following:
+- Run the following for setting permissions:
 
 ```
-env="dev"
-debug=true
-DB_HOST="127.0.0.1"
-DB_NAME="test"
-DB_USER="root"
-DB_PASSWORD=""
+sudo chmod -R 777 Application/Cache
+sudo chmod -R 777 Application/ViewsCompiled
+sudo chmod -R 777 Logs
+sudo chmod -R 777 public/generated
+cp .env.example .env
 ```
+
+After, edit the `.env` file to your local setup.
 
 # CSS Framework
 [Bulma Documentation](https://bulma.io/documentation/)
