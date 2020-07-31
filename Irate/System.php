@@ -118,6 +118,12 @@ class System {
 
     $config = require ROOT_PATH . '/Application/Config.php';
 
+    if (isset($config->ENCODING_KEY)) {
+      if (IRATE_ENV === 'production' && $config->ENCODING_KEY === 'UNIQUE_KEY_HERE') {
+        throw new \Exception('Please update your encoding key to something unique.');
+      }
+    }
+
     $this->config = $config;
   }
 

@@ -14,7 +14,7 @@ class Generate {
   private $system;
 
   public function __construct($vars = []) {
-    $this->CONFIG_FILES_PATH = IRATE_PATH . '/Resources/CopyFiles/';
+    $this->CONFIG_FILES_PATH = IRATE_PATH . '/Resources/';
 
     // Set each variable passed
     foreach ($vars as $key => $var) {

@@ -12,24 +12,26 @@ Join our discord server for real-time discussion on feature requests, updates, a
 
 # Setup Irate Framework (CLI)
 - From the root directory, run `composer install`
-- Run `php ir8 setup`
 - Load the site.
+
+# .env file (optional)
+
+Create a .env file in the root directory of the project with the following:
+
+```
+env="dev"
+debug=true
+DB_HOST="127.0.0.1"
+DB_NAME="test"
+DB_USER="root"
+DB_PASSWORD=""
+```
 
 # CSS Framework
 [Bulma Documentation](https://bulma.io/documentation/)
 
 # Template Engine
 [Smarty Template Engine Documentation](https://www.smarty.net/docs/en/)
-
-# Packages
-
-Current available packages:
-
-### Todo Example
-
-An example of how to create a Todo list via the Irate Framework.
-
-`php ir8 package install todos`
 
 # Migrations
 

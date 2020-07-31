@@ -60,7 +60,7 @@ $config = [
    * Application parameters
    */
   'PARAMS' => [
-    'siteTitle'     => 'IrateFramework'
+    'siteTitle' => 'IrateFramework'
   ],
 ];
 
