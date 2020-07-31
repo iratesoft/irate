@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+body{
+  font-family: 'Nunito', sans-serif;
+}
+
+.field.has-addons {
+  display: flex;
+  justify-content: center;
+  padding: 0px;
+}
+
+.control.form {
+  width: 90%;
+}
+
+button {
+  float: right;
+  background-color: white;
+  border: none;
+  margin-top: 10px;
+  outline: none;
+}
+
+.todo-item {
+  padding: 25px;
+  font-size: 26px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  width: 95%;
+  margin: 0 auto 25px;
+}
+
+.todo-item > input[type="checkbox"] {
+  display: inline-block;
+  margin-right: 15px;
+  -webkit-appearance:none;
+  width:26px;
+  height:26px;
+  background: white;
+  border-radius:5px;
+  border:2px solid #555;
+  outline: 0;
+  position: relative;
+  top: 4px;
+  float: left;
+}
+
+.todo-item > input[type="checkbox"]:checked {
+    background: #009e6c;
+}
+
+.todo-item > input[type="text"] {
+  background: none;
+  border: 0;
+  font-size: 26px;
+  width: 60%;
+  outline: 0;
+  display: inline-block;
+  float: left;
+}
+
+.todo-item > .icon {
+  float: right;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: .2 ease all;
+  position: relative;
+  top: 4px;
+}
+
+.todo-item > .icon:hover {
+  opacity: 1;
+}
+
+.clearfix {
+  clear: both;
+  content: ' ';
+  height: 1px;
+  float: none;
+}

@@ -14,10 +14,16 @@ use Irate\Core\Security;
 use Irate\Core\Session;
 use Irate\Core\Email;
 
+// Root path must be defined to load the .env
+if (defined('ROOT_PATH')) {
+  $dotenv = \Dotenv\Dotenv::createImmutable(ROOT_PATH);
+  $dotenv->load();
+}
+
 // Define globals if not already.
 defined('IRATE_PATH')        or define('IRATE_PATH',  __DIR__);
-defined('IRATE_ENV')         or define('IRATE_ENV',   'dev');
-defined('IRATE_DEBUG')       or define('IRATE_DEBUG', false);
+defined('IRATE_ENV')         or define('IRATE_ENV', (isset($_ENV['env']) ? $_ENV['env'] : 'dev'));
+defined('IRATE_DEBUG')       or define('IRATE_DEBUG', (isset($_ENV['debug']) ? $_ENV['debug'] : false));
 defined('IRATE_PUBLIC_PATH') or define('IRATE_PUBLIC_PATH', IRATE_PATH . '/../public');
 
 class System {
@@ -77,7 +83,7 @@ class System {
       $this->config->SHOW_ERRORS :
       false
     ));
-    
+
     defined('IRATE_LOG_PATH') or define('IRATE_LOG_PATH', (
       isset($this->config->LOG_PATH) ?
       $this->config->LOG_PATH :
@@ -111,6 +117,12 @@ class System {
       throw new \Exception('/Application/Config.php does not exist.');
 
     $config = require ROOT_PATH . '/Application/Config.php';
+
+    if (isset($config->ENCODING_KEY)) {
+      if (IRATE_ENV === 'production' && $config->ENCODING_KEY === 'UNIQUE_KEY_HERE') {
+        throw new \Exception('Please update your encoding key to something unique.');
+      }
+    }
 
     $this->config = $config;
   }

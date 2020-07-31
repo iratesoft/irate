@@ -37,7 +37,7 @@ class AssetBundle {
       self::$config = $vars['config'];
     }
 
-    if (isset($_ENV['baseUrl'])) self::$baseUrl =$_ENV['baseUrl'];
+    if (isset($_ENV['baseUrl'])) self::$baseUrl = $_ENV['baseUrl'];
 
     $this->setBundle();
   }
@@ -181,35 +181,35 @@ class AssetBundle {
   private function setBundleVars() {
     if ($this->bundle !== false) {
       if (defined($this->bundleName . "::SCRIPTS")) {
-        if ($this->bundle::SCRIPTS)     self::$SCRIPTS     = $this->bundle::SCRIPTS;
+        if ($this->bundle::SCRIPTS) self::$SCRIPTS = $this->bundle::SCRIPTS;
         else self::$SCRIPTS = [];
       } else {
         self::$SCRIPTS = [];
       }
 
       if (defined($this->bundleName . "::STYLES")) {
-        if ($this->bundle::STYLES)      self::$STYLES      = $this->bundle::STYLES;
+        if ($this->bundle::STYLES) self::$STYLES = $this->bundle::STYLES;
         else self::$STYLES = [];
       } else {
         self::$STYLES = [];
       }
 
       if (defined($this->bundleName . "::CACHE_BUST")) {
-        if ($this->bundle::CACHE_BUST)  self::$CACHE_BUST  = $this->bundle::CACHE_BUST;
+        if ($this->bundle::CACHE_BUST) self::$CACHE_BUST = $this->bundle::CACHE_BUST;
         else self::$CACHE_BUST = false;
       } else {
         self::$CACHE_BUST = false;
       }
 
       if (defined($this->bundleName . "::BUNDLE_SCRIPTS")) {
-        if ($this->bundle::BUNDLE_SCRIPTS)  self::$BUNDLE_SCRIPTS  = $this->bundle::BUNDLE_SCRIPTS;
+        if ($this->bundle::BUNDLE_SCRIPTS) self::$BUNDLE_SCRIPTS = $this->bundle::BUNDLE_SCRIPTS;
         else self::$BUNDLE_SCRIPTS = false;
       } else {
         self::$BUNDLE_SCRIPTS = false;
       }
 
       if (defined($this->bundleName . "::BUNDLE_STYLES")) {
-        if ($this->bundle::BUNDLE_STYLES)  self::$BUNDLE_STYLES  = $this->bundle::BUNDLE_STYLES;
+        if ($this->bundle::BUNDLE_STYLES) self::$BUNDLE_STYLES = $this->bundle::BUNDLE_STYLES;
         else self::$BUNDLE_STYLES = false;
       } else {
         self::$BUNDLE_STYLES = false;

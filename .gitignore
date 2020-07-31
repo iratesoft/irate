@@ -1,3 +1,7 @@
-test
 vendor
 composer.lock
+Logs/*.txt
+*.tpl.php
+public/generated/*.css
+public/generated/*.js
+.env
