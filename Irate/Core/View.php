@@ -62,12 +62,13 @@ class View
     $assetsUrl = (substr($baseUrl, -1) === '/' ? $baseUrl . 'assets' : $baseUrl . '/assets');
 
     // All variables to use in templates
-    self::$Smarty->assign('baseUrl', $baseUrl);
+    self::$Smarty->assign('baseUrl',   $baseUrl);
     self::$Smarty->assign('assetsUrl', $assetsUrl);
-    self::$Smarty->assign('app', self::$system);
-    self::$Smarty->assign('asset', self::$system::$AssetBundle);
-    self::$Smarty->assign('security', self::$system::$security);
-    self::$Smarty->assign('session', self::$system::$session);
+    self::$Smarty->assign('app',       self::$system);
+    self::$Smarty->assign('asset',     self::$system::$AssetBundle);
+    self::$Smarty->assign('security',  self::$system::$security);
+    self::$Smarty->assign('session',   self::$system::$session);
+    self::$Smarty->assign('libraries', self::$system::$libraries);
 
     // Register HTML Helper
     self::$Smarty->registerClass("Html", "\\Irate\\Helpers\\Html");

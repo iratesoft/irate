@@ -46,6 +46,7 @@ class System {
   public static $security;
   public static $session;
   public static $email;
+  public static $libraries;
 
   public function __construct($config = []) {
     // Set config and params
@@ -104,7 +105,10 @@ class System {
       self::$AssetBundle = new AssetBundle(['baseUrl' => $this->getBaseUrl(), 'config' => $this->config]);
       self::$security    = new Security(['config' => $this->config]);
       self::$session     = new Session(['config' => $this->config]);
-      self::$view        = new View(['system' => $this, 'baseUrl' => $this->getBaseUrl()]);
+
+      $this->setLibraries();
+
+      self::$view = new View(['system' => $this, 'baseUrl' => $this->getBaseUrl()]);
     }
   }
 
@@ -134,6 +138,21 @@ class System {
     if (isset($this->config->PARAMS)) {
       self::$params = $this->config->PARAMS;
     }
+  }
+
+  private function setLibraries() {
+    $libraries = [];
+
+    if (isset($this->config->PRELOADED_LIBRARIES)) {
+      if (is_array($this->config->PRELOADED_LIBRARIES)) {
+        foreach ($this->config->PRELOADED_LIBRARIES as $library) {
+          $libNameParts = explode('\\', $library);
+          $libraries[lcfirst($libNameParts[count($libNameParts) - 1])] = new  $library;
+        }
+      }
+    }
+
+    self::$libraries = (object) $libraries;
   }
 
   /**

@@ -29,11 +29,12 @@ abstract class Model
   public function __construct() {
 
     // Set all class instances from System
-    $this->db       = System::$db;
-    $this->request  = System::$request;
-    $this->security = System::$security;
-    $this->email    = System::$email;
-    $this->session  = System::$session;
+    $this->db        = System::$db;
+    $this->request   = System::$request;
+    $this->security  = System::$security;
+    $this->email     = System::$email;
+    $this->session   = System::$session;
+    $this->libraries = System::$libraries;
 
     $this->instantiate();
   }

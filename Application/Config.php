@@ -44,6 +44,21 @@ $config = [
   ],
 
   /**
+   * List of libraries that you would like
+   * to be preloaded into IrateFramework.
+   *
+   * These libraries are accessed via the following:
+   * Controllers, Models, Views
+   *
+   * With the following syntax:
+   * $libraries->test->test(); // For Views
+   * $this->libraries->test->test(); // For Controllers and Models
+   */
+  'PRELOADED_LIBRARIES' => [
+    '\\Application\\Libraries\\Test'
+  ],
+
+  /**
    * Encoding key for things like sessions
    */
   'ENCODING_KEY' => 'UNIQUE_KEY_HERE',

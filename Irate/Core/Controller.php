@@ -23,15 +23,16 @@ abstract class Controller {
   */
   public function __construct($system, $params)
   {
-    $this->view     = $system::$view;
-    $this->request  = $system::$request;
-    $this->response = $system::$response;
-    $this->security = $system::$security;
-    $this->session  = $system::$session;
-    $this->db       = $system::$db;
-    $this->email    = $system::$email;
-    $this->asset    = $system::$AssetBundle;
-    $this->params   = $params;
+    $this->view      = $system::$view;
+    $this->request   = $system::$request;
+    $this->response  = $system::$response;
+    $this->security  = $system::$security;
+    $this->session   = $system::$session;
+    $this->db        = $system::$db;
+    $this->email     = $system::$email;
+    $this->asset     = $system::$AssetBundle;
+    $this->libraries = $system::$libraries;
+    $this->params    = $params;
   }
 
   public function __call($name, $args) {

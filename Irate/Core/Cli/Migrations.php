@@ -185,7 +185,7 @@ class Migrations {
    * Application\Config class.
    */
   private function setDatabaseVariables() {
-    $this->DATABASE_NAME = $this->system->config::DB_NAME;
+    $this->DATABASE_NAME = $this->system->config->DB_NAME;
     ConsoleLogger::log("Database Name: $this->DATABASE_NAME");
   }
 
